@@ -1,0 +1,119 @@
+:host ::ng-deep *{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+.main {
+  margin: 0px auto;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.wrapper_item {
+  display: flex;
+  flex-direction: column;
+  
+}
+.wrapper_phone,
+.wrapper_address {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.wrapper_item label {
+  width: 300px;
+  margin-bottom: 5px;
+}
+.wrapper_item input {
+  width: 300px;
+  height: 35px;
+  padding: 3px 6px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.548);
+}
+.wrapper_phone .inputDiv span,
+.wrapper_address .inputDiv span {
+  position: relative;
+}
+.inputDiv:not(:first-child) span::before,
+.wrapper_address .inputDiv:not(:first-child) span::before {
+  background-image: url(../delete.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+  display: block;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  right: 6px;
+  bottom: 0px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+ 
+.wrapper_item button {
+  width: 301px;
+  height: 35px;
+  margin-top: 5px;
+  line-height: 30px;
+  background-color: #02c20c;
+  border: 2px solid #02c20c;
+  border-radius: 4px;
+  font-size: 1.3rem;
+  color: white;
+  letter-spacing: 3px;
+  word-spacing: 3px;
+  text-align: center;
+}
+.wrapper_item_button button {
+  width: 300px;
+  height: 40px;
+  margin-top: 5px;
+  line-height: 40px;
+  background-color: #0084ff;
+  border: 2px solid #0084ff;
+  border-radius: 4px;
+  font-size: 1.3rem;
+  color: white;
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  text-align: center;
+}
+.wrapper_item button:hover {
+  cursor: pointer;
+}
+.wrapper_item_button button:hover {
+  cursor: pointer;
+}
+
+:host ::ng-deep .inValidError {
+  color: #f00;
+  margin-top: 2px;
+}
+
+input.ng-invalid.ng-dirty, input.ng-touched.ng-invalid {
+  border: 2px solid rgb(255, 0, 0);
+  border-radius: 4px;
+}
+input.ng-valid.ng-dirty, input.ng-touched.ng-valid {
+  border: 2px solid rgba(0, 153, 0, 0.993);
+  border-radius: 4px;
+}
+
+.passwords {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &.ng-invalid {
+    & > div:last-child > input.ng-touched.ng-valid {
+      border-color: red;
+      border-radius: 4px;
+    }
+  }
+}
