@@ -109,11 +109,6 @@ input.ng-valid.ng-dirty, input.ng-touched.ng-valid {
   display: flex;
   flex-direction: column;
   gap: 5px;
-
-  &.ng-invalid {
-    & > div:last-child > input.ng-touched.ng-valid {
-      border-color: red;
-      border-radius: 4px;
-    }
-  }
+   
 }
+

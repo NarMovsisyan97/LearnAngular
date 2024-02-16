@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   Validators,
   FormArray,
-  FormGroup,
 } from '@angular/forms';
 import { emailValidator } from './customValidators/email-validator';
 import { passwordValidtaor } from './customValidators/password-validator';
@@ -17,29 +16,29 @@ import { phoneValidator } from './customValidators/phone-validator';
 })
 export class AppComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
-  
 
   myForm = this.formBuilder.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     email: ['', [emailValidator]],
     phones: this.formBuilder.array([
-      this.formBuilder.control('+(374)', [Validators.required,phoneValidator]),
+      this.formBuilder.control('+(374)', [Validators.required, phoneValidator]),
     ]),
     address: this.formBuilder.array([new FormControl('', Validators.required)]),
     birthday: ['', [Validators.required]],
-    passwords: this.formBuilder.group(
-      {
-        pass: ['', [Validators.required, passwordValidtaor]],
-        confirmPass: ['', [Validators.required, passwordValidtaor]],
-      },
-      {
-        validators: [passwordsMatchValidator],
-      }
-    ),
+    passwords: this.formBuilder.group({
+      pass: ['', [Validators.required, passwordValidtaor]],
+      confirmPass: ['', [Validators.required]],
+    }),
   });
-
   ngOnInit(): void {
+    this.myForm.controls.passwords.controls.confirmPass.addValidators(
+      passwordsMatchValidator(this.myForm.controls.passwords.controls.pass)
+    );
+  }
+  onPasswordChange() {
+    this.myForm.controls.passwords.controls.confirmPass.updateValueAndValidity();
+    console.log(this.myForm.controls.passwords.controls.confirmPass.errors)
   }
 
   phonesArray = this.myForm.controls['phones'] as FormArray<FormControl>;
@@ -47,9 +46,7 @@ export class AppComponent implements OnInit {
 
   addPhone() {
     (<FormArray>this.myForm.controls['phones']).push(
-      this.formBuilder.control('+(374)', [
-        Validators.required,phoneValidator
-      ])
+      this.formBuilder.control('+(374)', [Validators.required, phoneValidator])
     );
   }
 
@@ -67,43 +64,8 @@ export class AppComponent implements OnInit {
     (<FormArray>this.myForm.controls['address']).removeAt(i);
   }
 
-  // getUserBirthday(): Object {
-  //   let birthday: any = this.myForm.value.birthday?.split('-');
-  //   const userBirthday = {
-  //     birthdayDay: '',
-  //     birthdayMonth: '',
-  //     birthdayYear: '',
-  //   };
-  //   return ({
-  //     birthdayDay: birthday[2],
-  //     birthdayMonth: birthday[1],
-  //     birthdayYear: birthday[0],
-  //   } = userBirthday);
-  // }
-
   setUserInfo(event: any) {
-    console.log(this.myForm.controls.passwords);
-    console.log('pass: ' + this.myForm.controls.passwords.controls.pass.value);
-    console.log(
-      'confirmPass: ' +
-        this.myForm.controls.passwords.controls.confirmPass.value
-    );
-    console.log(
-      'pass != datark tox:' +
-        ((this.myForm.controls.passwords.controls.pass.value as any) !== '')
-    );
-    console.log(
-      'confirmPass != datark tox:' +
-        ((this.myForm.controls.passwords.controls.confirmPass.value as any) !==
-          '')
-    );
-    console.log(
-      'passwordner havasar en:' +
-        (this.myForm.controls.passwords.controls.confirmPass.value ===
-          this.myForm.controls.passwords.controls.pass.value)
-    );
-
-    console.log(this.myForm);
+    console.log(this.myForm.value)
   }
 
   getUserInfo() {}

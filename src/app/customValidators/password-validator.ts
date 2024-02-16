@@ -26,18 +26,15 @@ export function passwordValidtaor(
   //   if (!passwordPatternRegex.passwordRegexLowercase)
   //     return { passwordRegexLowercase: false };
 
-  let result = {
-
-  }
+  let result = {};
   for (let key in passwordPatternRegex) {
     let error = passwordPatternRegex[key as keyof Object];
     if (!error) {
-      result[key as keyof Object] = error
+      result[key as keyof Object] = error;
     }
   }
-  return {
-     result
-  };
+
+  return Object.keys(result).length ? result : null;
 
   // if ( passwordPatternRegex.passwordRegexNumbers &&
   //      passwordPatternRegex.passwordRegexSymbols &&

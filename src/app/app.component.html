@@ -56,13 +56,13 @@
         <div class="wrapper_address">
           <div
             class="inputDiv"
-            *ngFor="let address of addressArray.controls; let i = index"
+            *ngFor="let addr of addressArray.controls; let i = index"
             formArrayName="address"
           >
             <input
-              show
+              showError
               type="text"
-              [formControl]="address"
+              [formControl]="addr"
               id="address"
               name="address"
             />
@@ -73,248 +73,35 @@
       </div>
       <div class="wrapper_item">
         <label for="birthday">Birthday:</label>
-        <div
-          class="inputDiv"
-          [ngClass]="{
-            validInput:
-              myForm.controls.birthday.valid &&
-              myForm.controls.birthday.touched,
-            inValidInput:
-              myForm.controls.birthday.invalid &&
-              myForm.controls.birthday.touched
-          }"
-        >
-          <input
-            type="date"
-            lang="fr-CA"
-            formControlName="birthday"
-            id="birthday"
-          />
-        </div>
-        <div
-          *ngIf="
-            myForm.controls.birthday.invalid && myForm.controls.birthday.touched
-          "
-        >
-          <p
-            [ngClass]="{
-              inValidError:
-                myForm.controls.birthday.invalid &&
-                myForm.controls.birthday.touched
-            }"
-          >
-            Required field
-          </p>
-        </div>
+        <input
+          showError
+          type="date"
+          lang="fr-CA"
+          formControlName="birthday"
+          id="birthday"
+        />
       </div>
-      <!-- <div class="passwords" formGroupName="passwords">
+      <div class="passwords" formGroupName="passwords">
         <div class="wrapper_item">
           <label for="pass">Password:</label>
-          <input type="password" formControlName="pass" id="pass" showError/>
-          <p
-            *ngIf="myForm.controls.passwords.controls.pass.errors?.['required'] &&
-                 myForm.controls.passwords.controls.pass.invalid && 
-               ( myForm.controls.passwords.controls.pass.touched ||
-                 myForm.controls.passwords.controls.pass.dirty ) "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.pass.invalid &&
-                (myForm.controls.passwords.controls.pass.touched ||
-                  myForm.controls.passwords.controls.pass.dirty)
-            }"
-          >
-            Required field
-          </p>
-          <p
-            *ngIf="!( myForm.controls.passwords.controls.pass.errors?.['passwordPatternRegex'].passwordRegexNumbers) && 
-                  myForm.controls.passwords.controls.pass.invalid &&                   
-                  myForm.controls.passwords.controls.pass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.pass.invalid &&
-                (myForm.controls.passwords.controls.pass.touched ||
-                  myForm.controls.passwords.controls.pass.dirty)
-            }"
-          >
-            Must be one number
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.pass.errors?.['passwordPatternRegex'].passwordRegexUppercase) && 
-                 myForm.controls.passwords.controls.pass.invalid && 
-                 myForm.controls.passwords.controls.pass.dirty"
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.pass.invalid &&
-                (myForm.controls.passwords.controls.pass.touched ||
-                  myForm.controls.passwords.controls.pass.dirty)
-            }"
-          >
-            Must be one uppercase
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.pass.errors?.['passwordPatternRegex'].passwordRegexLowercase) && 
-                 myForm.controls.passwords.controls.pass.invalid && 
-                 myForm.controls.passwords.controls.pass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.pass.invalid &&
-                (myForm.controls.passwords.controls.pass.touched ||
-                  myForm.controls.passwords.controls.pass.dirty)
-            }"
-          >
-            Must be one lowercase
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.pass.errors?.['passwordPatternRegex'].passwordRegexSymbols) && 
-                 myForm.controls.passwords.controls.pass.invalid &&                     
-                 myForm.controls.passwords.controls.pass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.pass.invalid &&
-                (myForm.controls.passwords.controls.pass.touched ||
-                  myForm.controls.passwords.controls.pass.dirty)
-            }"
-          >
-            {{ "Must be one sybol: (!@#$%^&*+-)" }}
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.pass.errors?.['passwordPatternRegex'].passwordRegexMinLength) && 
-                 myForm.controls.passwords.controls.pass.invalid &&                     
-                 myForm.controls.passwords.controls.pass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.pass.invalid &&
-                (myForm.controls.passwords.controls.pass.touched ||
-                  myForm.controls.passwords.controls.pass.dirty)
-            }"
-          >
-            Minimum length 8
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.pass.errors?.['passwordPatternRegex'].passwordRegexMaxLength) && 
-                 myForm.controls.passwords.controls.pass.invalid &&                      
-                 myForm.controls.passwords.controls.pass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.pass.invalid &&
-                (myForm.controls.passwords.controls.pass.touched ||
-                  myForm.controls.passwords.controls.pass.dirty)
-            }"
-          >
-            Maximum length 16
-          </p>
+          <input 
+            showError 
+            type="password" 
+            formControlName="pass" 
+            id="pass"
+            (input)="onPasswordChange()" 
+          />
         </div>
         <div class="wrapper_item">
           <label for="confirmPass">Confirm Password:</label>
-
           <input
+            showError
             type="password"
             formControlName="confirmPass"
             id="confirmPass"
           />
-          <p
-            *ngIf="myForm.controls.passwords.controls.confirmPass.errors?.['required'] &&
-                   myForm.controls.passwords.controls.confirmPass.invalid && 
-                 ( myForm.controls.passwords.controls.confirmPass.touched ||
-                   myForm.controls.passwords.controls.confirmPass.dirty ) "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.confirmPass.invalid &&
-                (myForm.controls.passwords.controls.confirmPass.touched ||
-                  myForm.controls.passwords.controls.confirmPass.dirty)
-            }"
-          >
-            Required field
-          </p>
-          <p
-            *ngIf="!( myForm.controls.passwords.controls.confirmPass.errors?.['passwordPatternRegex'].passwordRegexNumbers) && 
-                      myForm.controls.passwords.controls.confirmPass.invalid &&                   
-                      myForm.controls.passwords.controls.confirmPass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.confirmPass.invalid &&
-                (myForm.controls.passwords.controls.confirmPass.touched ||
-                  myForm.controls.passwords.controls.confirmPass.dirty)
-            }"
-          >
-            Must be one number
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.confirmPass.errors?.['passwordPatternRegex'].passwordRegexUppercase) && 
-                     myForm.controls.passwords.controls.confirmPass.invalid && 
-                     myForm.controls.passwords.controls.confirmPass.dirty"
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.confirmPass.invalid &&
-                (myForm.controls.passwords.controls.confirmPass.touched ||
-                  myForm.controls.passwords.controls.confirmPass.dirty)
-            }"
-          >
-            Must be one uppercase
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.confirmPass.errors?.['passwordPatternRegex'].passwordRegexLowercase) && 
-                     myForm.controls.passwords.controls.confirmPass.invalid && 
-                     myForm.controls.passwords.controls.confirmPass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.confirmPass.invalid &&
-                (myForm.controls.passwords.controls.confirmPass.touched ||
-                  myForm.controls.passwords.controls.confirmPass.dirty)
-            }"
-          >
-            Must be one lowercase
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.confirmPass.errors?.['passwordPatternRegex'].passwordRegexSymbols) && 
-                     myForm.controls.passwords.controls.confirmPass.invalid &&                     
-                     myForm.controls.passwords.controls.confirmPass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.confirmPass.invalid &&
-                (myForm.controls.passwords.controls.confirmPass.touched ||
-                  myForm.controls.passwords.controls.confirmPass.dirty)
-            }"
-          >
-            {{ "Must be one sybol: (!@#$%^&*+-)" }}
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.confirmPass.errors?.['passwordPatternRegex'].passwordRegexMinLength) && 
-                     myForm.controls.passwords.controls.confirmPass.invalid &&                     
-                     myForm.controls.passwords.controls.confirmPass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.confirmPass.invalid &&
-                (myForm.controls.passwords.controls.confirmPass.touched ||
-                  myForm.controls.passwords.controls.confirmPass.dirty)
-            }"
-          >
-            Minimum length 8
-          </p>
-          <p
-            *ngIf="!(myForm.controls.passwords.controls.confirmPass.errors?.['passwordPatternRegex'].passwordRegexMaxLength) && 
-                     myForm.controls.passwords.controls.confirmPass.invalid &&                      
-                     myForm.controls.passwords.controls.confirmPass.dirty "
-            [ngClass]="{
-              inValidError:
-                myForm.controls.passwords.controls.confirmPass.invalid &&
-                (myForm.controls.passwords.controls.confirmPass.touched ||
-                  myForm.controls.passwords.controls.confirmPass.dirty)
-            }"
-          >
-            Maximum length 16
-          </p>
-          <p
-            *ngIf="
-              myForm.controls.passwords.invalid &&
-              myForm.controls.passwords.controls.confirmPass.dirty
-            "
-            [ngClass]="'inValidError'"
-          >
-            Passwords do not match
-          </p>
         </div>
-      </div> -->
+      </div>
 
       <div class="wrapper_item_button">
         <button type="button" (click)="setUserInfo($event)">Set Info</button>

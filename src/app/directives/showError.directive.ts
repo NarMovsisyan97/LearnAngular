@@ -12,6 +12,12 @@ export class ShowErrorDirective {
     this.parent = this.element.nativeElement.parentNode as HTMLElement;
   }
 
+  ngOnInit() {
+    this.control.statusChanges?.subscribe(() => {
+      this.showErrors();
+    });
+  }
+
   getErrorMessage(key: string): string {
     switch (key) {
       case 'required':
@@ -32,6 +38,8 @@ export class ShowErrorDirective {
         return 'Must be one uppercase letter';
       case 'passwordRegexLowercase':
         return 'Must be one lowercase letter';
+      case 'passwordMatches':
+        return 'Passwords do not match';
       default:
         return '';
     }
@@ -51,7 +59,6 @@ export class ShowErrorDirective {
     for (const key in this.control.errors) {
       if (this.control.errors[key] instanceof Object) {
         for (const errorsType in this.control.errors[key]) {
-          
           errorsArray.push(this.getErrorMessage(errorsType));
         }
       } else {

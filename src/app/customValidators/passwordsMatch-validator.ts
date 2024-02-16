@@ -1,17 +1,15 @@
-import { AbstractControl, FormControl, FormGroup } from "@angular/forms";
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 
-export function passwordsMatchValidator(control: AbstractControl){
-     let value =  control?.value;
-     if ( ( value.pass  === value.confirmPass ) ){
-          return null
-     }else {
-          console.log("pass" + value.pass)
-          console.log("confirmpass" + value.confirmPass)
-          return {
-               'passwordMatches': {
-                    valid: false
+export function passwordsMatchValidator(controlPass: AbstractControl): ValidatorFn{ 
+     return (controlConfirmPass: AbstractControl): ValidationErrors | null => {
+          if(controlPass.value === controlConfirmPass.value){
+               return null
+          }else {
+               return {
+                    passwordMatches: false
                }
           }
      }
+     
 }
